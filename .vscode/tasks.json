@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "DSR3: build whole project",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-g",
+                "-Wall",
+                "${workspaceFolder}/Roundtrip_Measurement/src/*.cpp",
+                "-o",
+                "${workspaceFolder}/Roundtrip_Measurement/Measurement",
+                "-lboost_system",
+                "-lpthread"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
