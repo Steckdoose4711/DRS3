@@ -9,3 +9,10 @@ First, start the echo server (pong):
 Then, start the ping client
 
 ```ping-pong ping udp```
+
+## Install Instructions
+
+### Boost Library:
+sudo apt-get install libboost1.67-*
+### VS Code Tutorial:
+https://electrobotify.wordpress.com/2019/08/16/remote-development-on-raspberry-pi-with-vs-code/
