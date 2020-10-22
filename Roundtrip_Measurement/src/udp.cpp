@@ -23,17 +23,18 @@ int ping_udp(const std::string& host, size_t count)
     udp::endpoint sender_endpoint = *(udp::resolver{io_service}.resolve(udp::resolver::query(host, "20124")));
     udp::endpoint dummy;
 
-    auto clock = std::chrono::high_resolution_clock{};
+    //auto clock = std::chrono::high_resolution_clock{};
 
     std::vector<__suseconds_t> times_measured;
 
     for(size_t i = 0; i < count; i++)
     {
-        auto now = clock.now();
+        //auto now = clock.now();
         bool warm = i >= count/2;
 
         timeval tim_send;
         timeval tim_rec;
+        float elapsedTime;
 
         gettimeofday(&tim_send, NULL);
 
@@ -43,9 +44,15 @@ int ping_udp(const std::string& host, size_t count)
                                  socket.async_receive_from(boost::asio::buffer(data, 512), dummy, [&](const boost::system::error_code &error, size_t bytes_recvd) {
                                      if(warm)
                                      {
-                                        l.add(clock.now() - now);
+                                        //l.add(clock.now() - now);
                                         gettimeofday(&tim_rec, NULL);
-                                        times_measured.emplace_back(tim_rec.tv_usec - tim_send.tv_usec);
+
+                                        elapsedTime = (tim_rec.tv_sec - tim_send.tv_sec) * 1000000.0;      // sec to us
+                                        elapsedTime += (tim_rec.tv_usec - tim_send.tv_usec);
+
+                                        times_measured.push_back(elapsedTime);
+                                        std::cout << elapsedTime << std::endl;
+
                                     }
                                  });
                              });
@@ -70,7 +77,7 @@ int ping_udp(const std::string& host, size_t count)
         std::cerr << "Error writing to csv file" << std::endl;
     }
 
-    l.generate(std::cout);
+    //l.generate(std::cout);
 
     socket.close();
     return 0;

@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Roundtrip_Measurement/bin/Measurement",
-            "args": [],
+            "args": ["ping","udp","255.255.255.0", "1000"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
