@@ -10,7 +10,7 @@
                 "-Wall",
                 "${workspaceFolder}/Roundtrip_Measurement/src/*.cpp",
                 "-o",
-                "${workspaceFolder}/Roundtrip_Measurement/Measurement",
+                "${workspaceFolder}/Roundtrip_Measurement/bin/Measurement",
                 "-lboost_system",
                 "-lpthread"
             ],
@@ -20,6 +20,9 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "clear": true
             }
         }
     ]
