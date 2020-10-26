@@ -16,3 +16,7 @@ Then, start the ping client
 sudo apt-get install libboost1.67-*
 ### VS Code Tutorial:
 https://electrobotify.wordpress.com/2019/08/16/remote-development-on-raspberry-pi-with-vs-code/
+
+### Modifications Raspberry:
+
+Increasing size of swap partition from 256MB to 1024MB.
