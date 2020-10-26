@@ -6,8 +6,15 @@
 #include <iostream>
 #include <fstream>
 #include "latency.hpp"
+#include <boost/asio/deadline_timer.hpp>
+#include <boost/asio/io_service.hpp>
+#include <boost/asio/ip/udp.hpp>
+#include <cstdlib>
+#include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 
 using boost::asio::ip::udp;
+using boost::asio::deadline_timer;
 
 static size_t const size_payload_byte = 256;
 
@@ -24,7 +31,10 @@ int ping_udp(const std::string& host, size_t count)
     size_t percentage_cnt = count /100;
     size_t percentage_print = 1;
 
-    std::vector<__suseconds_t> times_measured;
+    std::vector<size_t> times_measured;
+    times_measured.reserve(count);
+
+    bool timeout_recognized = true;
 
     for(size_t i = 0; i < count; i++)
     {
@@ -32,7 +42,7 @@ int ping_udp(const std::string& host, size_t count)
 
         timeval tim_send;
         timeval tim_rec;
-        float elapsedTime;
+        size_t elapsedTime;
 
         if(i > percentage_cnt)
         {
@@ -41,26 +51,33 @@ int ping_udp(const std::string& host, size_t count)
             percentage_cnt += count / 100;
         }
 
+        timeout_recognized = true;
         gettimeofday(&tim_send, NULL);
+        
 
         socket.async_send_to(boost::asio::buffer(data, size_payload_byte), sender_endpoint,
                              [&](const boost::system::error_code &error, size_t bytes_recvd)
                              {
                                  socket.async_receive_from(boost::asio::buffer(data, size_payload_byte), dummy, [&](const boost::system::error_code &error, size_t bytes_recvd) {
-                                     //if(warm)
-                                     {
-                                        gettimeofday(&tim_rec, NULL);
+                                    gettimeofday(&tim_rec, NULL);
 
-                                        elapsedTime = (tim_rec.tv_sec - tim_send.tv_sec) * 1000000.0;      // sec to us
-                                        elapsedTime += (tim_rec.tv_usec - tim_send.tv_usec);
-                                        times_measured.push_back(elapsedTime);
-                                        std::cout i << ": " << elapsedTime << "us" << std::endl;
-                                    }
+                                    elapsedTime = (tim_rec.tv_sec - tim_send.tv_sec) * 1000000.0;      // sec to us
+                                    elapsedTime += (tim_rec.tv_usec - tim_send.tv_usec);
+                                    times_measured.push_back(elapsedTime);
+                                    std::cout << i << " elapsed: " << elapsedTime << "us " << std::endl;
+                                    timeout_recognized = false;
                                  });
                              });
 
-        io_service.run();
+        // if the package will not be received after one second, abort the measurement for this package
+        io_service.run_for(std::chrono::milliseconds(1000));
         io_service.reset();
+        io_service.restart();
+
+        if(timeout_recognized)
+        {
+            std::cout << "Package: " << i << " timeout" << std::endl;
+        }
     }
 
     try
