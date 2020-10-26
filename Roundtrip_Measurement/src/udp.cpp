@@ -5,16 +5,8 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include "latency.hpp"
-#include <boost/asio/deadline_timer.hpp>
-#include <boost/asio/io_service.hpp>
-#include <boost/asio/ip/udp.hpp>
-#include <cstdlib>
-#include <boost/bind.hpp>
-#include <boost/date_time/posix_time/posix_time_types.hpp>
 
 using boost::asio::ip::udp;
-using boost::asio::deadline_timer;
 
 static size_t const size_payload_byte = 256;
 

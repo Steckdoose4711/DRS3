@@ -1,14 +1,14 @@
-# C++ UDP/TCP Ping Pong
+# C++ UDP Ping Pong
 
-UDP & TCP Latency benchmark
+UDP Latency benchmark inspired from https://github.com/farnyser/cpp-ping-pong
 
 First, start the echo server (pong):
 
-```ping-pong pong udp```
+```./Measurement pong 192.168.43.186```
 
 Then, start the ping client
 
-```ping-pong ping udp```
+```./Measurement ping 192.168.43.150 50000```
 
 ## Install Instructions
 
