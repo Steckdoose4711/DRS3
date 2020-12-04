@@ -5,12 +5,21 @@
             "type": "shell",
             "label": "DSR3: build whole project",
             "command": "/usr/bin/g++",
+            //"args": [
+            //    "-g",
+            //    "-Wall",
+            //    "${workspaceFolder}/Roundtrip_Measurement/src/*.cpp",
+            //    "-o",
+            //    "${workspaceFolder}/Roundtrip_Measurement/bin/Measurement",
+            //    "-lboost_system",
+            //    "-lpthread"
+            //],
             "args": [
                 "-g",
                 "-Wall",
-                "${workspaceFolder}/Roundtrip_Measurement/src/*.cpp",
+                "${workspaceFolder}/Debugging_Module/src/*.cpp",
                 "-o",
-                "${workspaceFolder}/Roundtrip_Measurement/bin/Measurement",
+                "${workspaceFolder}/Debugging_Module/bin/Debugging_Module",
                 "-lboost_system",
                 "-lpthread"
             ],
