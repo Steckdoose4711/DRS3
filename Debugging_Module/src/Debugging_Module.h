@@ -27,7 +27,7 @@
 class Debugging_Module
 {
     public:
-    Debugging_Module(std::string const &logfile_name);
+    Debugging_Module(std::string const &logfile_name);  //TODO: Input Argumente der Anwendung mitgeben, um diese sofort ins logfile zu schreiben
     ~Debugging_Module();
 
 

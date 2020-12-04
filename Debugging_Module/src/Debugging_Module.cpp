@@ -13,10 +13,13 @@ Debugging_Module::Debugging_Module(std::string const &logfile_name)
     {
         std::cerr << "[ERROR]: failed to open logfile." << std::endl;
     }
+
+    //ToDo: (eventuell eigene ip adresse rausschreiben? oder bekommen wir die übergeben?)
 }
 
 Debugging_Module::~Debugging_Module()
 {
+    mLogfile << "---------------------------------------------------------------" << std::endl << std::endl << std::endl;
 
     mLogfile.close();
 }
