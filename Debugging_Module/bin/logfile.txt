@@ -1,0 +1,9 @@
+Fri Dec  4 17:06:28 2020 ROLE: New Client Registered: 192.168.0.1:8080
+Fri Dec  4 17:06:28 2020 ROLE: New Client Registered: 192.168.0.2:8080
+Fri Dec  4 17:06:28 2020 ROLE: New Client Registered: 192.168.0.3:8080
+Fri Dec  4 17:06:59 2020 ROLE: New Client Registered: 192.168.0.1:8080
+Fri Dec  4 17:06:59 2020 ROLE: New Client Registered: 192.168.0.2:8080
+Fri Dec  4 17:06:59 2020 ROLE: New Client Registered: 192.168.0.3:8080
+Fri Dec  4 17:06:59 2020 ROLE: New Client Registered: 192.168.0.4711:8081
+Fri Dec  4 17:06:59 2020 ROLE: New Client Registered: 192.168.0.4712:8082
+Fri Dec  4 17:06:59 2020 ROLE: New Client Registered: 192.168.0.4713:8083

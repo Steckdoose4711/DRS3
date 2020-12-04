@@ -13,5 +13,11 @@ int main()
 
     log.DBG_LOG_WriteLogToFile();
 
+    log.DBG_LOG_NewClientRegistered("192.168.0.4711", "8081");
+    log.DBG_LOG_NewClientRegistered("192.168.0.4712", "8082");
+    log.DBG_LOG_NewClientRegistered("192.168.0.4713", "8083");    
+
+    log.DBG_LOG_WriteLogToFile();
+
     return 0;
 }

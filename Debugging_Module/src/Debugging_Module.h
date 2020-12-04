@@ -47,10 +47,16 @@ class Debugging_Module
     void DBG_LOG_NewClientRegistered(std::string const &ip, std::string const &port);
 
     private:
-    std::string BuildLogMessage(std::string const &logmessage);
+    enum Roles {ROLE, CONNECT, TIME, TICK, MESSAGE, ERROR};
+
+
+    std::string BuildLogMessage(Roles const role, std::string const &logmessage);
 
     std::vector<std::string> mLogBuffer;    // internal log message buffer
     std::ofstream mLogfile;                 // logfile-stream
+
+
+
 
 };
 
