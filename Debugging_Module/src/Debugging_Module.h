@@ -1,32 +1,15 @@
 #ifndef DEBUGGING_MODULE_H
 #define DEBUGGING_MODULE_H
 
-
 #include <vector>
 #include <string>
 #include <fstream>
 #include <iostream>
 
 
-#define DBG_GPIO_ENABLE 1
-#define DBG_LOG_ENABLE 1
-#define DBG_LOG_MESSAGES_ENABLE 1
-
-
-#define DBG_GPIO_ENABLE 1
-#define DBG_GPIO_ENABLE 1
-
-#define DBG_LOG_TICK_ENABLE 1
-#define DBG_LOG_TIME_ENABLE 1
-#define DBG_LOG_ROLE_ENABLE 1
-#define DBG_LOG_CONNECT_ENABLE 1
-#define DBG_LOG_ERROR_ENABLE 1
-
-
-
 class Debugging_Module
 {
-    public:
+public:
     Debugging_Module(std::string const &logfile_name);  //TODO: Input Argumente der Anwendung mitgeben, um diese sofort ins logfile zu schreiben
     ~Debugging_Module();
 
@@ -34,7 +17,12 @@ class Debugging_Module
     //---------------------------------------------------------------------------
     //Pin Debugging
     void DBG_GPIO_ROLE_SET_MASTER();
-    //... ToDo Lukas: implementieren der debug Pin Schnittstellen
+    void DBG_GPIO_ROLE_SET_CLIENT();
+    void DBG_GPIO_SYSTICK_EVENT();
+    void DBG_GPIO_MSG_RECEIVED();
+    void DBG_GPIO_MSG_SENT();
+    void DBG_GPIO_CONNECTED();
+    void DBG_GPIO_DISCONNECTED();
 
 
     //---------------------------------------------------------------------------
@@ -46,18 +34,20 @@ class Debugging_Module
     // Call this function, when a new client has been registered
     void DBG_LOG_NewClientRegistered(std::string const &ip, std::string const &port);
 
-    private:
-    enum Roles {ROLE, CONNECT, TIME, TICK, MESSAGE, ERROR};
+private:
+    enum Categories {ROLE, CONNECT, TIME, TICK, MESSAGE, ERROR};
+    enum class Role {Master, Client};
 
 
-    std::string BuildLogMessage(Roles const role, std::string const &logmessage);
+    std::string BuildLogMessage(Categories const category, std::string const &logmessage);
 
     std::vector<std::string> mLogBuffer;    // internal log message buffer
     std::ofstream mLogfile;                 // logfile-stream
 
-
-
-
+    Role mRole;
+    size_t mGPIO4_state;
 };
+
+
 
 #endif
