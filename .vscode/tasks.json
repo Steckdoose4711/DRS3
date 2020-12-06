@@ -20,8 +20,7 @@
                 "${workspaceFolder}/Debugging_Module/src/*.cpp",
                 "-o",
                 "${workspaceFolder}/Debugging_Module/bin/Debugging_Module",
-                "-lboost_system",
-                "-lpthread"
+                "-lwiringPi"
             ],
             "problemMatcher": [
                 "$gcc"
