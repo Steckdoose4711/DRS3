@@ -33,6 +33,40 @@ void test_debug_messages(Debugging_Module & log) {
     log.DBG_LOG_NewClientRegistered("192.168.0.4713", "8083");
 
     log.DBG_LOG_WriteLogToFile();
+
+    log.DBG_LOG_BroadcastingMasterStatus();
+    log.DBG_LOG_ConnectedWithMaster("192.168.0.4713", "8083");
+    log.DBG_LOG_ConnectionLost("192.168.0.4713", "8083");
+    log.DBG_LOG_CorrectingSysTime(123);
+    log.DBG_LOG_CorrectionValueForClient("192.168.0.4713", "8083", 123);
+    log.DBG_LOG_Deviations(std::vector<int>{ 1,3,8,4,6,-5 }, std::vector<int>{ -5,8 });
+    log.DBG_LOG_Error("Error message xyz");
+    log.DBG_LOG_MacrotickRateAdaption(53, 42, 11);
+    log.DBG_LOG_MacrotickJump(13);
+
+    std::string msgJson = "{ \
+        \"id\": \"936DA01F-9ABD-4D9D-80C7-02AF85C822A8\", \
+        \"timestamp\" : \"1606406414488\", \
+        \"node\" : { \
+        \"address\": \"10.0.0.6\", \
+            \"priority\" : 0x3 \
+        }, \
+        \"msg\" : { \
+            \"type\": 0x1, \
+                \"payload\" : \"\" \
+        } \
+    }";
+
+    log.DBG_LOG_MessageReceived("192.168.0.4713", msgJson);
+    log.DBG_LOG_MessageSent("192.168.0.4713", msgJson);
+    log.DBG_LOG_NewConnectionStatus(true);
+    log.DBG_LOG_ReceivedCorrectionValue(13);
+    log.DBG_LOG_ReceivedPriority("high", "low", false);
+    log.DBG_LOG_TimestampRequest();
+    log.DBG_LOG_TimestampResult("192.168.0.4713", "8083", "timestamp");
+    log.DBG_LOG_Macrotick(123);
+    
+    log.DBG_LOG_WriteLogToFile();
 }
 
 //this test toggles every pin every sleep() seconds

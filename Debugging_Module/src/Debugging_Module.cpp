@@ -114,12 +114,218 @@ void Debugging_Module::DBG_LOG_WriteLogToFile()
 
 void Debugging_Module::DBG_LOG_NewClientRegistered(std::string const &ip, std::string const &port)
 {
-    //TODO ifdef defines abfragen, nur wenn 1 dann in den LogBuffer schreiben
-    std::string logmessage = "New Client Registered: " + ip + ":" + port;
-    mLogBuffer.emplace_back(BuildLogMessage(ROLE, logmessage));
+    #if DBG_LOG_ROLE_ENABLE == 1
+        std::string logmessage = "New client registered: " + ip + ":" + port;
+        mLogBuffer.emplace_back(BuildLogMessage(ROLE, logmessage));
+    #endif
 }
 
+void Debugging_Module::DBG_LOG_ReceivedPriority(std::string const &recPrio, std::string const &ownPrio, bool changesToMaster)
+{
+    #if DBG_LOG_ROLE_ENABLE == 1
+        std::string logmessage = "Received priority from other node: " + recPrio + " (own priority: " + ownPrio + ") - changing role to master: " + (changesToMaster?"true":"false");
+        mLogBuffer.emplace_back(BuildLogMessage(ROLE, logmessage));
+    #endif
+}
 
+void Debugging_Module::DBG_LOG_ConnectedWithMaster(std::string const &ip, std::string const &port) 
+{
+    #if DBG_LOG_ROLE_ENABLE == 1
+        std::string logmessage = "Now connected with master: " + ip + ":" + port;
+        mLogBuffer.emplace_back(BuildLogMessage(ROLE, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_ConnectionLost(std::string const &ip, std::string const &port)
+{
+    #if DBG_LOG_CONNECT_ENABLE == 1
+        std::string logmessage = "Connection to master " + ip + ":" + port + " lost";
+        mLogBuffer.emplace_back(BuildLogMessage(CONNECT, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_NewConnectionStatus(std::string const &status)
+{
+    #if DBG_LOG_CONNECT_ENABLE == 1
+        std::string logmessage = "New connection status: " + status;
+        mLogBuffer.emplace_back(BuildLogMessage(CONNECT, logmessage));
+    #endif
+}
+void Debugging_Module::DBG_LOG_NewConnectionStatus(bool isConnected)
+{
+    #if DBG_LOG_CONNECT_ENABLE == 1
+        std::string logmessage = "New connection status: " + isConnected?"connected":"disconnected";
+        mLogBuffer.emplace_back(BuildLogMessage(CONNECT, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_BroadcastingMasterStatus() 
+{
+    #if DBG_LOG_ROLE_ENABLE == 1
+        std::string logmessage = "Broadcasting new master status";
+        mLogBuffer.emplace_back(BuildLogMessage(ROLE, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_TimestampResult(std::string const &ip, std::string const &port, std::string const &timestamp)
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Received timestamp result from client " + ip + ":" + port + ", value = " + timestamp;
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_TimestampRequest() 
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Received timestamp request from master";
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_Deviations(std::vector<std::string> const &deviations, std::vector<std::string> const &ignored) 
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Deviations: [";
+        for(auto d : deviations) {;
+            logmessage += "(" + d + ") ";
+        }
+        logmessage += "], ignoring [";
+        for(auto i : ignored) {
+            logmessage += "(" + i + ") ";
+        }
+        logmessage += "]";
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+void Debugging_Module::DBG_LOG_Deviations(std::vector<int> const &deviations, std::vector<int> const &ignored) 
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Deviations: [";
+        for(auto d : deviations) {
+            logmessage += "(" + std::to_string(d) + ") ";
+        }
+        logmessage += "], ignoring [";
+        for(auto i : ignored) {
+            logmessage += "(" + std::to_string(i) + ") ";
+        }
+        logmessage += "]";
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_CorrectingSysTime(std::string const &value) 
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Correcting system time by " + value + "ms";
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+void Debugging_Module::DBG_LOG_CorrectingSysTime(int value)
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Correcting system time by " + std::to_string(value) + "ms";
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_CorrectionValueForClient(std::string const &ip, std::string const &port, std::string const &corrValue)
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Correction value for client " + ip + ":" + port + " is " + corrValue;
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+void Debugging_Module::DBG_LOG_CorrectionValueForClient(std::string const &ip, std::string const &port, int corrValue)
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Correction value for client " + ip + ":" + port + " is " + std::to_string(corrValue);
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_ReceivedCorrectionValue(std::string const &corrValue)
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Received correction value " + corrValue;
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+void Debugging_Module::DBG_LOG_ReceivedCorrectionValue(int corrValue)
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Received correction value " + std::to_string(corrValue);
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_MacrotickJump(std::string const &jumpValue)
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Correcting macrotick by jumping " + jumpValue + "ms";
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+void Debugging_Module::DBG_LOG_MacrotickJump(int jumpValue)
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Correcting macrotick by jumping " + std::to_string(jumpValue) + "ms";
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_MacrotickRateAdaption(std::string const &oldRate, std::string const &newRate, std::string const &difference)
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Correcting macrotick by rate adaption from " + oldRate + " to " + newRate + " (" + difference + "ms)";
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+void Debugging_Module::DBG_LOG_MacrotickRateAdaption(int oldRate, int newRate, int difference)
+{
+    #if DBG_LOG_TIME_ENABLE == 1
+        std::string logmessage = "Correcting macrotick by rate adaption from " + std::to_string(oldRate) + " to " + std::to_string(newRate) + " (" + std::to_string(difference) + "ms)";
+        mLogBuffer.emplace_back(BuildLogMessage(TIME, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_Macrotick(std::string const &tickCount)
+{
+    #if DBG_LOG_TICK_ENABLE == 1
+        std::string logmessage = "Current Macrotick: " + tickCount;
+        mLogBuffer.emplace_back(BuildLogMessage(TICK, logmessage));
+    #endif
+}
+void Debugging_Module::DBG_LOG_Macrotick(std::size_t tickCount)
+{
+    #if DBG_LOG_TICK_ENABLE == 1
+        std::string logmessage = "Current Macrotick: " + std::to_string(tickCount);
+        mLogBuffer.emplace_back(BuildLogMessage(TICK, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_MessageReceived(std::string const &srcIp, std::string const &jsonContent) 
+{
+    #if DBG_LOG_MESSAGES_ENABLE == 1
+        std::string logmessage = "Received Message from " + srcIp + ": " + jsonContent;
+        mLogBuffer.emplace_back(BuildLogMessage(MESSAGE, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_MessageSent(std::string const &destIp, std::string const &jsonContent)
+{
+    #if DBG_LOG_MESSAGES_ENABLE == 1
+        std::string logmessage = "Sent Message to " + destIp + ": " + jsonContent;
+        mLogBuffer.emplace_back(BuildLogMessage(MESSAGE, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_Error(std::string const &errorMsg)
+{
+    #if DBG_LOG_ERROR_ENABLE == 1
+        mLogBuffer.emplace_back(BuildLogMessage(ERROR, errorMsg));
+    #endif
+}
 
 
 
