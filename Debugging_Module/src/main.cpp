@@ -104,7 +104,7 @@ int main()
     std::cout << std::endl << "[INFO] Started." << std::endl << std::endl;
     try {
 
-        Debugging_Module log("/home/pi/Desktop/DRS3/Debugging_Module/bin/logfile.txt");
+        Debugging_Module log("/home/pi/Desktop/DRS3/Debugging_Module/bin/logfile.txt", "application_input_args", "192.168.0.100", "4711");
 
         test_debug_messages(log);
 

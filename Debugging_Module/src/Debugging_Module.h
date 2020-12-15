@@ -21,7 +21,11 @@
 class Debugging_Module
 {
 public:
-    Debugging_Module(std::string const &logfile_name);  //TODO: Input Argumente der Anwendung mitgeben, um diese sofort ins logfile zu schreiben
+    //logfile_name: path and name of the logfile
+    //input_args: input arguments of the Application
+    //own_ip: own ip of the device
+    //own_port: on port, which is used by the application
+    Debugging_Module(std::string const &logfile_name, std::string const &input_args, std::string const &own_ip, std::string const &own_port);
     ~Debugging_Module();
 
 

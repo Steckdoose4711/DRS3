@@ -16,20 +16,20 @@ constexpr int GPIO_04 = 7;      //7         4       7
 constexpr int GPIO_17 = 0;      //11        17      0
 
 
-Debugging_Module::Debugging_Module(std::string const &logfile_name)
+Debugging_Module::Debugging_Module(std::string const &logfile_name, std::string const &input_args, std::string const &own_ip, std::string const &own_port)
 {
     try
     {
         mLogfile.open (logfile_name, std::ios_base::app);
+        // writing info to head of the logfile
+        mLogfile << "Application startet with arguments: " << input_args << std::endl;
+        mLogfile << "Device IP: " << own_ip << std::endl;
+        mLogfile << "Application Port: " << own_port << std::endl;
     }
     catch(...)
     {
         std::cerr << "[ERROR]: failed to open logfile." << std::endl;
     }
-
-    //ToDo: (eventuell eigene ip adresse rausschreiben? oder bekommen wir die übergeben?)
-    //Antwort von Lukas: Ich würde übergeben. Nur der Aufrufer weiß welche Ip von welchem Interface richtig ist
-
 
     //setup gpio
     wiringPiSetup();
