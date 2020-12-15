@@ -36,7 +36,8 @@ void test_debug_messages(Debugging_Module & log) {
 
     log.DBG_LOG_BroadcastingMasterStatus();
     log.DBG_LOG_ConnectedWithMaster("192.168.0.4713", "8083");
-    log.DBG_LOG_ConnectionLost("192.168.0.4713", "8083");
+    log.DBG_LOG_ConnectionLostMaster("192.168.0.4713", "8083");
+    log.DBG_LOG_ConnectionLostSlave("192.168.0.4713", "8083");
     log.DBG_LOG_CorrectingSysTime(123);
     log.DBG_LOG_CorrectionValueForClient("192.168.0.4713", "8083", 123);
     log.DBG_LOG_Deviations(std::vector<int>{ 1,3,8,4,6,-5 }, std::vector<int>{ -5,8 });

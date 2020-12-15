@@ -53,12 +53,14 @@ public:
     // R3: Call this function, when connecting to a new master
     void DBG_LOG_ConnectedWithMaster(std::string const &ip, std::string const &port);
     // R4: Call this function, when connection to master was lost
-    void DBG_LOG_ConnectionLost(std::string const &ip, std::string const &port);
+    void DBG_LOG_ConnectionLostMaster(std::string const &ip, std::string const &port);
     // R5: Call this function, when connection status changed (connected/disconnected)
     void DBG_LOG_NewConnectionStatus(std::string const &status);
     void DBG_LOG_NewConnectionStatus(bool isConnected);
     // R6: Call this function, when broadcasting that node is now master
     void DBG_LOG_BroadcastingMasterStatus();
+    // R7: Call this function, when connection to slave was lost
+    void DBG_LOG_ConnectionLostSlave(std::string const &ip, std::string const &port); 
     // T1: Call this function, when receiving timestamp responses from clients
     void DBG_LOG_TimestampResult(std::string const &ip, std::string const &port, std::string const &timestamp);
     // T2: Call this function, when receiving timestamp request from master

@@ -22,7 +22,7 @@ Debugging_Module::Debugging_Module(std::string const &logfile_name, std::string 
     {
         mLogfile.open (logfile_name, std::ios_base::app);
         // writing info to head of the logfile
-        mLogfile << "Application startet with arguments: " << input_args << std::endl;
+        mLogfile << "Application started with arguments: " << input_args << std::endl;
         mLogfile << "Device IP: " << own_ip << std::endl;
         mLogfile << "Application Port: " << own_port << std::endl;
     }
@@ -136,10 +136,18 @@ void Debugging_Module::DBG_LOG_ConnectedWithMaster(std::string const &ip, std::s
     #endif
 }
 
-void Debugging_Module::DBG_LOG_ConnectionLost(std::string const &ip, std::string const &port)
+void Debugging_Module::DBG_LOG_ConnectionLostMaster(std::string const &ip, std::string const &port)
 {
     #if DBG_LOG_CONNECT_ENABLE == 1
         std::string logmessage = "Connection to master " + ip + ":" + port + " lost";
+        mLogBuffer.emplace_back(BuildLogMessage(CONNECT, logmessage));
+    #endif
+}
+
+void Debugging_Module::DBG_LOG_ConnectionLostSlave(std::string const &ip, std::string const &port)
+{
+    #if DBG_LOG_CONNECT_ENABLE == 1
+        std::string logmessage = "Connection to slave " + ip + ":" + port + " lost";
         mLogBuffer.emplace_back(BuildLogMessage(CONNECT, logmessage));
     #endif
 }
