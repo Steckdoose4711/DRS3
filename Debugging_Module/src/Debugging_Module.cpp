@@ -60,41 +60,63 @@ Debugging_Module::~Debugging_Module()
 
 void Debugging_Module::DBG_GPIO_ROLE_SET_MASTER() {
     mRole = Role::Master;
-    digitalWrite(GPIO_02, HIGH);
+
+    #if DBG_GPIO_ENABLE == 1
+        digitalWrite(GPIO_02, HIGH);
+    #endif
 }
 void Debugging_Module::DBG_GPIO_ROLE_SET_CLIENT() {
     mRole = Role::Client;
-    digitalWrite(GPIO_02, LOW);
+
+    #if DBG_GPIO_ENABLE == 1
+        digitalWrite(GPIO_02, LOW);
+    #endif
 }
 void Debugging_Module::DBG_GPIO_SYSTICK_EVENT() {
     if(mGPIO4_state == LOW) {
-        digitalWrite(GPIO_04, HIGH);
+        #if DBG_GPIO_ENABLE == 1
+            digitalWrite(GPIO_04, HIGH);
+        #endif
         mGPIO4_state = HIGH;
     }
     else {
-        digitalWrite(GPIO_04, LOW);
+        #if DBG_GPIO_ENABLE == 1
+            digitalWrite(GPIO_04, LOW);
+        #endif
         mGPIO4_state = LOW;
     }
 }
 void Debugging_Module::DBG_GPIO_MSG_RECEIVED() {
     if(mRole == Role::Master)
-        digitalWrite(GPIO_03, LOW);
+        #if DBG_GPIO_ENABLE == 1
+            digitalWrite(GPIO_03, LOW);
+        #endif
     else if(mRole == Role::Client) {
-        digitalWrite(GPIO_03, HIGH);
+        #if DBG_GPIO_ENABLE == 1
+            digitalWrite(GPIO_03, HIGH);
+        #endif
     }
 }
 void Debugging_Module::DBG_GPIO_MSG_SENT() {
     if(mRole == Role::Master)
-        digitalWrite(GPIO_03, HIGH);
+        #if DBG_GPIO_ENABLE == 1
+            digitalWrite(GPIO_03, HIGH);
+        #endif
     else if(mRole == Role::Client) {
-        digitalWrite(GPIO_03, LOW);
+        #if DBG_GPIO_ENABLE == 1
+            digitalWrite(GPIO_03, LOW);
+        #endif
     }
 }
 void Debugging_Module::DBG_GPIO_CONNECTED() {
-    digitalWrite(GPIO_17, HIGH);
+    #if DBG_GPIO_ENABLE == 1
+        digitalWrite(GPIO_17, HIGH);
+    #endif
 }
 void Debugging_Module::DBG_GPIO_DISCONNECTED() {
-    digitalWrite(GPIO_17, LOW);
+    #if DBG_GPIO_ENABLE == 1
+        digitalWrite(GPIO_17, LOW);
+    #endif
 }
 
 

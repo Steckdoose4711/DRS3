@@ -15,8 +15,6 @@
 #define DBG_LOG_CONNECT_ENABLE 1
 #define DBG_LOG_ERROR_ENABLE 1
 
-#define DBG_GPIO_ENABLE 1
-#define DBG_GPIO_ENABLE 1
 
 class Debugging_Module
 {
