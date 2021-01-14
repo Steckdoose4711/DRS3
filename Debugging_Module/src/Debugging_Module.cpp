@@ -35,8 +35,8 @@ Debugging_Module::Debugging_Module(std::string const &logfile_name, std::string 
     wiringPiSetup();
 
     pinMode(GPIO_02, OUTPUT);
-    pinMode(GPIO_02, OUTPUT);
     pinMode(GPIO_03, OUTPUT);
+    pinMode(GPIO_04, OUTPUT);
     pinMode(GPIO_17, OUTPUT);
 
     //initialize to known value
